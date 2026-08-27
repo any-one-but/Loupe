@@ -1,0 +1,111 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  --color-background: #0a0908;
+  --color-foreground: #f3efe6;
+  --color-surface: #141311;
+  --color-surface-2: #1c1b19;
+  --color-muted: #9a9488;
+  --color-subtle: #6e6960;
+  --color-accent: #e8e2d6;
+  --color-accent-foreground: #0a0908;
+  --color-border: rgb(243 239 230 / 0.12);
+  --color-border-strong: rgb(243 239 230 / 0.22);
+
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --aspect-portrait: 3 / 4;
+
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html,
+  body {
+    height: 100%;
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    overflow: hidden;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  kbd {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    min-width: 1.75rem;
+    height: 1.75rem;
+    padding: 0 0.4rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border-strong);
+    background: var(--color-surface);
+    color: var(--color-foreground);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hud-fade {
+    transition: none;
+  }
+}
+
+.hud-fade {
+  transition:
+    opacity 250ms var(--ease-smooth-out),
+    transform 250ms var(--ease-smooth-out);
+}
+
+.scrim-top {
+  background: linear-gradient(
+    to bottom,
+    rgb(10 9 8 / 0.78),
+    rgb(10 9 8 / 0.18) 55%,
+    transparent
+  );
+}
+
+.scrim-bottom {
+  background: linear-gradient(
+    to top,
+    rgb(10 9 8 / 0.88),
+    rgb(10 9 8 / 0.28) 55%,
+    transparent
+  );
+}
