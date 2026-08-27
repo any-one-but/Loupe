@@ -185,8 +185,12 @@ export const useViewer = create<ViewerState>()(
         });
       },
 
-      bumpHud: () =>
-        set({ hudUntil: Date.now() + 2400, cursorHidden: false }),
+      bumpHud: () => {
+        const s = get();
+        const hudUntil = Date.now() + 2400;
+        if (!s.cursorHidden && s.hudUntil >= hudUntil - 200) return;
+        set({ hudUntil, cursorHidden: false });
+      },
       hideHud: () => set({ hudUntil: 0 }),
 
       setView: (view) => set({ view, help: false, browsingFavorites: false }),

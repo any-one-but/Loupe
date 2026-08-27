@@ -1,17 +1,18 @@
-import { currentSet, favoriteFiles, useViewer } from "@/store/viewer";
+import { currentSet, useViewer } from "@/store/viewer";
 
 export function SetProgress() {
   const browsingFavorites = useViewer((s) => s.browsingFavorites);
   const mediaSet = useViewer((s) => currentSet(s));
   const fileIndex = useViewer((s) => s.fileIndex);
   const favIndex = useViewer((s) => s.favIndex);
-  const favs = useViewer((s) => favoriteFiles(s));
+  const favorites = useViewer((s) => s.favorites);
 
-  const files = browsingFavorites ? favs : (mediaSet?.files ?? []);
+  const total = browsingFavorites
+    ? favorites.length
+    : (mediaSet?.files.length ?? 0);
   const index = browsingFavorites ? favIndex : fileIndex;
-  if (!files.length) return null;
+  if (!total) return null;
 
-  const total = files.length;
   if (total > 40) {
     return (
       <div className="h-0.5 w-full overflow-hidden bg-foreground/10">
@@ -23,11 +24,15 @@ export function SetProgress() {
     );
   }
 
+  const keys = browsingFavorites
+    ? favorites
+    : (mediaSet?.files.map((file) => file.id) ?? []);
+
   return (
     <div className="flex w-full gap-0.5">
-      {files.map((file, i) => (
+      {keys.map((id, i) => (
         <div
-          key={file.id}
+          key={id}
           className={
             i <= index
               ? "h-0.5 flex-1 rounded-full bg-accent"
